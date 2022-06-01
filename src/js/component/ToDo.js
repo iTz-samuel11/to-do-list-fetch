@@ -1,10 +1,14 @@
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import React from "react";
 
-export const ToDo = (props) => {
+export const ToDo = (id, ...props) => {
 	return (
-		<div>
-			<p>{props.text}</p>
+		<div key={id} id={id}>
+			{props.text}
 		</div>
 	);
+};
+
+ToDo.propTypes = {
+	text: PropTypes.string,
 };
