@@ -88,6 +88,7 @@ const Tasks = (props) => {
 						id={index}
 						setterList={props.setterList}
 						list={props.list}
+						getToDos={props.getToDos}
 					/>
 				);
 			})}

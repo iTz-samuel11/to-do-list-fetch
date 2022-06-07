@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import { useCallback } from "react/cjs/react.production.min";
 
 export const Task = (props) => {
 	const deleteTask = useCallback(
@@ -17,11 +16,11 @@ export const Task = (props) => {
 					),
 				}
 			);
-			if (response !== 200) {
+			if (response.status !== 200) {
 				alert("no pude borrar");
 				return;
 			}
-			await getToDos();
+			await props.getToDos();
 		},
 		[props.getToDos, props.id, props.list]
 	);
