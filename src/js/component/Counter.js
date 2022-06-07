@@ -24,6 +24,6 @@ export const Counter = (props) => {
 	);
 };
 
-Counter.proptypes = {
-	list: PropTypes.string,
+Counter.propTypes = {
+	list: PropTypes.array,
 };
