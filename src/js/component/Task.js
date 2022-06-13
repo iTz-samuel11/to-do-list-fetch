@@ -2,10 +2,24 @@ import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 
 export const Task = (props) => {
+	const deleteUser = useCallback(async (e) => {
+		const response = await fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/samuel11",
+			{
+				method: "delete",
+				headers: { "Content-Type": "application/json" },
+			}
+		);
+		if (response.status !== 200) {
+			alert("error al eliminar la lista");
+			return;
+		}
+		await props.setterList([]);
+	}, []);
 	const deleteTask = useCallback(
 		async (e) => {
 			const response = await fetch(
-				"https://assets.breatheco.de/apis/fakes/todos/user/samuel11",
+				"https://assets.breatheco.de/apis/fake/todos/user/samuel11",
 				{
 					method: "put",
 					headers: { "Content-Type": "application/json" },
@@ -36,7 +50,13 @@ export const Task = (props) => {
 					margin: "1px",
 					border: "1px solid #b9b9b9",
 				}}
-				onClick={deleteTask}>
+				onClick={(e) => {
+					if (props.list.length > 1) {
+						deleteTask();
+					} else {
+						deleteUser();
+					}
+				}}>
 				<i className="fa-solid fa-trash"></i>
 			</span>
 		</li>

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Counter } from "./Counter.js";
 import { Input } from "./Input.js";
-import { Task } from "./Task.js";
+import { Tasks } from "./Tasks.js";
 
 export const List = () => {
 	const [newTask, setNewTask] = useState("");
@@ -75,28 +75,4 @@ export const List = () => {
 			<Counter list={listOfTasks} />
 		</div>
 	);
-};
-
-const Tasks = (props) => {
-	return (
-		<div>
-			{props.list.map((task, index) => {
-				return (
-					<Task
-						task={task}
-						key={index}
-						id={index}
-						setterList={props.setterList}
-						list={props.list}
-						getToDos={props.getToDos}
-					/>
-				);
-			})}
-		</div>
-	);
-};
-
-Tasks.propTypes = {
-	setterList: PropTypes.func,
-	list: PropTypes.array,
 };
