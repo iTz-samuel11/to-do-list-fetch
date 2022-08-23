@@ -7,6 +7,25 @@ import { Tasks } from "./Tasks.js";
 export const List = () => {
 	const [newTask, setNewTask] = useState("");
 	const [listOfTasks, setListOfTasks] = useState([]);
+
+	const getToDos = useCallback(async () => {
+		try {
+			const response = await fetch(
+				"https://assets.breatheco.de/apis/fake/todos/user/samuel11"
+			);
+
+			if (!response.ok) {
+				createUser();
+				return;
+			}
+			const body = await response.json();
+			setListOfTasks(body);
+		} catch (error) {
+			alert("la lista no esta");
+			return;
+		}
+	}, []);
+
 	const createUser = useCallback(async () => {
 		try {
 			const response = await fetch(
@@ -17,33 +36,17 @@ export const List = () => {
 					body: JSON.stringify([]),
 				}
 			);
-			if (response.status !== 200) {
-				alert("no tiene usuario creado");
-				return;
-			}
+			// if (!response.status.ok) {
+			// 	alert("no tiene usuario creado");
+			// 	return;
+			// }
+
 			getToDos();
 		} catch (error) {
 			alert("no esta disponible la lista");
 			return;
 		}
 	}, [getToDos]);
-
-	const getToDos = useCallback(async () => {
-		try {
-			const response = await fetch(
-				"https://assets.breatheco.de/apis/fake/todos/user/samuel11"
-			);
-			if (response.status !== 200) {
-				if (response.status === 404) await createUser();
-				return;
-			}
-			const body = await response.json();
-			setListOfTasks(body);
-		} catch (error) {
-			alert("la lista no esta");
-			return;
-		}
-	}, []);
 
 	useEffect(() => {
 		getToDos();
@@ -58,6 +61,7 @@ export const List = () => {
 				list={listOfTasks}
 				setterList={setListOfTasks}
 				getToDos={getToDos}
+				createUser={createUser}
 			/>
 			{listOfTasks.length === 0 ? (
 				<div
